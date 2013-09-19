@@ -17,3 +17,10 @@ font-family: Arial;
   text-align: center;
 }
 
+.incorrect {
+  background-color: yellow;
+}
+
+.value-provided {
+  background-color: #DDD;
+}
