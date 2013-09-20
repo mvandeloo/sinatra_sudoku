@@ -27,13 +27,6 @@ def puzzle(sudoku)
 end
 
 
-# old:
-# get '/' do
-#   sudoku = random_sudoku
-#   session[:solution] = sudoku		
-#   @current_solution = puzzle(sudoku)
-#   erb :index
-# end
 
 def generate_new_puzzle_if_necessary
   return if session[:current_solution]
@@ -47,6 +40,13 @@ def prepare_to_check_solution
   @check_solution = session[:check_solution]
   session[:check_solution] = nil
 end
+
+get '/reset' do
+  session[:solution] = nil
+  session[:current_solution] = nil
+  session[:last_visit] = nil
+  redirect to('/')
+end  
 
 get '/' do
   prepare_to_check_solution
@@ -63,8 +63,12 @@ get '/solution' do
   erb :index
 end
 
+
 post '/' do
-  cells = params["cell"]
+  boxes = params["cell"].each_slice(9).to_a
+  cells = (0..8).to_a.inject([]) {|memo, i|
+    memo += boxes[i/3*3, 3].map{|box| box[i%3*3, 3] }.flatten
+  }
   session[:current_solution] = cells.map{|value| value.to_i }.join
   session[:check_solution] = true
   redirect to("/")
