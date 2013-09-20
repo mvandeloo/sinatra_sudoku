@@ -6,6 +6,7 @@ require_relative './lib/cell'
 require_relative './helpers/application'
 require 'rack-flash'
 use Rack::Flash
+require 'newrelic_rpm'
 
 enable :sessions
 
