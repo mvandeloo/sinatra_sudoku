@@ -24,3 +24,7 @@ font-family: Arial;
 .value-provided {
   background-color: #DDD;
 }
+
+#flash {
+  margin: 20px;
+}

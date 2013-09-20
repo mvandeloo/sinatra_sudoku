@@ -2,10 +2,11 @@ require 'set'
 
 class Cell
 
-  attr_reader :slices, :value
+    attr_reader :slices, :value, :display_value
 
   def initialize(value)
     @value = value.to_i
+    @display_value = value.to_i
     @slices = []
   end
 

@@ -4,8 +4,12 @@ set :partial_template_engine, :erb
 require_relative './lib/sudoku'
 require_relative './lib/cell'
 require_relative './helpers/application'
+require 'rack-flash'
+use Rack::Flash
 
 enable :sessions
+
+set :session_secret, "123456"
 
 def random_sudoku
     # we're using 9 numbers, 1 to 9, and 72 zeros as an input
@@ -19,13 +23,13 @@ def random_sudoku
 end
 
 def puzzle(sudoku)
+  sudoku = sudoku.dup
 	a = (0..80).to_a.sample(12)
 	a.each do |index|
 	sudoku[index] = ''
 	end
 	sudoku
 end
-
 
 
 def generate_new_puzzle_if_necessary
@@ -38,6 +42,9 @@ end
 
 def prepare_to_check_solution
   @check_solution = session[:check_solution]
+  if @check_solution
+    flash[:notice] = "Incorrect values are highlighted in yellow"
+  end
   session[:check_solution] = nil
 end
 
@@ -57,9 +64,14 @@ get '/' do
   erb :index
 end
 
+get '/last-visit' do
+  "previous visit to homepage: #{session[:last_visit]}"
+end  
 
 get '/solution' do
   @current_solution = session[:solution]
+  @solution = session[:solution]
+  @puzzle = session[:solution]
   erb :index
 end
 
