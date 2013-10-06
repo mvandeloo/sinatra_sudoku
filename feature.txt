@@ -1,0 +1,24 @@
+Feature: Sudoku
+ In order to know if my settings were right  
+ As a Sudoku player 
+ I want to be told if my Sudoku Entry is right or not
+
+
+Scenario: Make a correct setting
+Given: I see the randomized Sudoku numbers
+And: I see the Sudoku board
+And: I have entered a correct value
+When I click the "check solutions" button" 
+Then the screen should show me that my result was correct
+
+
+
+Scenario: Make a setting
+Given: I see the randomized Sudoku numbers
+And: I see the Sudoku board
+And: I have entered a value
+When I click the "check solutions" button" 
+Then the screen should show me if my result was correct
+
+
+
